@@ -17,16 +17,31 @@
         </nav>
     </header>
     <main>
-        <section class="courses">
-            <% courses.forEach(course => { %>
-                <div class="course">
-                    <h2><%= course.title %></h2>
-                    <p><%= course.description %></p>
-                    <div class="rating">
-                        <%= Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
-                    </div>
-                </div>
-            <% }) %>
+        <section class="user-info">
+            <img src="<%= user.avatar || '/default-avatar.png' %>" alt="Avatar" class="avatar">
+            <h2><%= user.username %></h2>
+            <p>Email: <%= user.email %></p>
+            <form action="/change-password" method="post">
+                <label for="newPassword">Новый пароль:</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+                <button type="submit">Сменить пароль</button>
+            </form>
+        </section>
+        <section class="created-courses">
+            <h2>Созданные курсы</h2>
+            <ul>
+                <% createdCourses.forEach(course => { %>
+                    <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
+                <% }) %>
+            </ul>
+        </section>
+        <section class="completed-courses">
+            <h2>Пройденные курсы</h2>
+            <ul>
+                <% completedCourses.forEach(course => { %>
+                    <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
+                <% }) %>
+            </ul>
         </section>
     </main>
     <script src="/scripts.js"></script>
