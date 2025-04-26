@@ -81,6 +81,9 @@ app.get('/profile', authenticateToken, (req, res) => {
         if (err) {
             return res.send('Ошибка получения данных пользователя');
         }
+        if (!user) {
+            return res.send('Пользователь не найден');
+        }
         db.all("SELECT c.* FROM courses AS c JOIN user_courses AS uc ON c.id = uc.course_id WHERE uc.user_id = ?", [req.user.id], (err, completedCourses) => {
             if (err) {
                 return res.send('Ошибка получения завершенных курсов');
