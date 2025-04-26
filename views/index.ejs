@@ -33,7 +33,7 @@
                     <div class="rating">
                         <%= Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
                     </div>
-                    <a href="#" class="enroll">Пройти курс</a>
+                    <a href="/course/<%= course.id %>">Подробнее</a>
                 </div>
             <% }) %>
         </section>
