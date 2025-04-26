@@ -23,7 +23,8 @@
                     <h2><%= course.title %></h2>
                     <p><%= course.description %></p>
                     <div class="rating">
-                        <%= Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
+                        <span>Рейтинг:</span>
+                        <%- Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
                     </div>
                     <a href="/course/<%= course.id %>">Подробнее</a>
                 </div>
