@@ -21,23 +21,35 @@
             <h2>Автор: <%= course.author_name %></h2>
             <p><%= course.description %></p>
             <div class="rating">
+                <span>Рейтинг:</span>
                 <%- Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
             </div>
             <h3>Содержание курса</h3>
             <div class="content">
                 <p><%= course.content %></p>
             </div>
-            <form action="/rate-course/<%= course.id %>" method="post">
-                <label for="rating">Оцените курс:</label>
-                <select name="rating" id="rating" required>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-                <button type="submit">Оценить</button>
-            </form>
+            <% if (!userRating) { %>
+                <form action="/rate-course/<%= course.id %>" method="post">
+                    <label for="rating">Оцените курс:</label>
+                    <select name="rating" id="rating" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <button type="submit">Оценить</button>
+                </form>
+            <% } else { %>
+                <p>Вы уже оценили этот курс</p>
+            <% } %>
+            <% if (!userCourse) { %>
+                <form action="/complete-course/<%= course.id %>" method="post">
+                    <button type="submit">Пройти курс</button>
+                </form>
+            <% } else { %>
+                <p>Вы уже прошли этот курс</p>
+            <% } %>
         </section>
     </main>
     <script src="/scripts.js"></script>
