@@ -86,6 +86,10 @@ form button:hover {
     margin: 10px 0;
 }
 
+.rating span {
+    margin-right: 5px;
+}
+
 .star {
     color: gold;
 }
