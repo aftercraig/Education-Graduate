@@ -42,7 +42,8 @@ form label {
 }
 
 form input,
-form textarea {
+form textarea,
+form select {
     width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 15px;
@@ -87,4 +88,43 @@ form button:hover {
 
 .star {
     color: gold;
+}
+
+.user-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-info .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.created-courses,
+.completed-courses {
+    margin-bottom: 20px;
+}
+
+.created-courses ul,
+.completed-courses ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.created-courses li,
+.completed-courses li {
+    margin-bottom: 10px;
+}
+
+.created-courses a,
+.completed-courses a {
+    text-decoration: none;
+    color: #4CAF50;
+}
+
+.created-courses a:hover,
+.completed-courses a:hover {
+    text-decoration: underline;
 }
