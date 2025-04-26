@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Образовательная платформа</title>
+</head>
+<body>
+    <header>
+        <h1>Образовательная платформа</h1>
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/profile">Профиль</a>
+            <a href="/create-course">Создать курс</a>
+            <a href="/logout">Выход</a>
+        </nav>
+    </header>
+    <main>
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="Поиск курсов...">
+            <select name="sort">
+                <option value="">По умолчанию</option>
+                <option value="rating">По рейтингу</option>
+            </select>
+            <button type="submit">Искать</button>
+        </form>
+        <section class="courses">
+            <% courses.forEach(course => { %>
+                <div class="course">
+                    <h2><%= course.title %></h2>
+                    <p><%= course.description %></p>
+                    <div class="rating">
+                        <%= Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
+                    </div>
+                    <a href="#" class="enroll">Пройти курс</a>
+                </div>
+            <% }) %>
+        </section>
+    </main>
+    <script src="/scripts.js"></script>
+</body>
+</html>

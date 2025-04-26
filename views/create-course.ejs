@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Создать курс</title>
+</head>
+<body>
+    <header>
+        <h1>Создать курс</h1>
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/profile">Профиль</a>
+            <a href="/create-course">Создать курс</a>
+            <a href="/logout">Выход</a>
+        </nav>
+    </header>
+    <main>
+        <form action="/create-course" method="post">
+            <label for="title">Название курса:</label>
+            <input type="text" id="title" name="title" required>
+            
+            <label for="description">Краткое описание:</label>
+            <textarea id="description" name="description" required></textarea>
+            
+            <label for="content">Материал курса:</label>
+            <textarea id="content" name="content" required></textarea>
+            
+            <button type="submit">Создать курс</button>
+        </form>
+    </main>
+    <script src="/scripts.js"></script>
+</body>
+</html>
