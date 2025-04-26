@@ -4,19 +4,45 @@ const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const fs = require('fs');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
-// Подключение к базе данных
-let db = new sqlite3.Database(':memory:');
+// Настройка multer для загрузки файлов
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
+
+// Создание директории для загрузки файлов
+if (!fs.existsSync('uploads')) {
+    fs.mkdirSync('uploads');
+}
+
+// Подключение к базе данных в файле
+let db = new sqlite3.Database('database.db', (err) => {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log('Connected to the SQLite database.');
+});
+
+// Создание таблиц
 db.serialize(() => {
-    db.run("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT, avatar TEXT)");
-    db.run("CREATE TABLE courses (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, content TEXT, author_id INTEGER, rating REAL)");
-    db.run("CREATE TABLE user_courses (user_id INTEGER, course_id INTEGER)");
-    db.run("CREATE TABLE course_ratings (user_id INTEGER, course_id INTEGER, rating INTEGER)");
+    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT, avatar TEXT)");
+    db.run("CREATE TABLE IF NOT EXISTS courses (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, content TEXT, author_id INTEGER, rating REAL)");
+    db.run("CREATE TABLE IF NOT EXISTS user_courses (user_id INTEGER, course_id INTEGER)");
+    db.run("CREATE TABLE IF NOT EXISTS course_ratings (user_id INTEGER, course_id INTEGER, rating INTEGER)");
 });
 
 // Секретный ключ для JWT
@@ -98,6 +124,27 @@ app.get('/profile', authenticateToken, (req, res) => {
     });
 });
 
+// Изменение аватара
+app.post('/change-avatar', upload.single('avatar'), authenticateToken, (req, res) => {
+    const avatarPath = `/uploads/${req.file.filename}`;
+    db.run("UPDATE users SET avatar = ? WHERE id = ?", [avatarPath, req.user.id], function(err) {
+        if (err) {
+            return res.send('Ошибка изменения аватара');
+        }
+        res.redirect('/profile');
+    });
+});
+
+// Удаление аватара
+app.post('/delete-avatar', authenticateToken, (req, res) => {
+    db.run("UPDATE users SET avatar = ? WHERE id = ?", ['/default-avatar.png', req.user.id], function(err) {
+        if (err) {
+            return res.send('Ошибка удаления аватара');
+        }
+        res.redirect('/profile');
+    });
+});
+
 // Конструктор курсов
 app.get('/create-course', authenticateToken, (req, res) => {
     res.render('create-course', { user: req.user });
@@ -162,7 +209,17 @@ app.get('/course/:id', authenticateToken, (req, res) => {
             }
             const avgRating = ratingRow.avg_rating ? parseFloat(ratingRow.avg_rating) : 0;
             course.rating = avgRating;
-            res.render('course', { course, user: req.user });
+            db.get("SELECT * FROM course_ratings WHERE user_id = ? AND course_id = ?", [req.user.id, courseId], (err, userRating) => {
+                if (err) {
+                    return res.send('Ошибка проверки оценки курса');
+                }
+                db.get("SELECT * FROM user_courses WHERE user_id = ? AND course_id = ?", [req.user.id, courseId], (err, userCourse) => {
+                    if (err) {
+                        return res.send('Ошибка проверки завершения курса');
+                    }
+                    res.render('course', { course, user: req.user, userRating, userCourse });
+                });
+            });
         });
     });
 });
@@ -171,20 +228,28 @@ app.get('/course/:id', authenticateToken, (req, res) => {
 app.post('/rate-course/:id', authenticateToken, (req, res) => {
     const courseId = req.params.id;
     const { rating } = req.body;
-    db.run("INSERT INTO course_ratings (user_id, course_id, rating) VALUES (?, ?, ?)", [req.user.id, courseId, rating], function(err) {
+    db.get("SELECT * FROM course_ratings WHERE user_id = ? AND course_id = ?", [req.user.id, courseId], (err, userRating) => {
         if (err) {
-            return res.send('Ошибка оценки курса');
+            return res.send('Ошибка проверки оценки курса');
         }
-        db.get("SELECT AVG(rating) AS avg_rating FROM course_ratings WHERE course_id = ?", [courseId], (err, ratingRow) => {
+        if (userRating) {
+            return res.send('Вы уже оценивали этот курс');
+        }
+        db.run("INSERT INTO course_ratings (user_id, course_id, rating) VALUES (?, ?, ?)", [req.user.id, courseId, rating], function(err) {
             if (err) {
-                return res.send('Ошибка получения рейтинга курса');
+                return res.send('Ошибка оценки курса');
             }
-            const avgRating = ratingRow.avg_rating ? parseFloat(ratingRow.avg_rating) : 0;
-            db.run("UPDATE courses SET rating = ? WHERE id = ?", [avgRating, courseId], function(err) {
+            db.get("SELECT AVG(rating) AS avg_rating FROM course_ratings WHERE course_id = ?", [courseId], (err, ratingRow) => {
                 if (err) {
-                    return res.send('Ошибка обновления рейтинга курса');
+                    return res.send('Ошибка получения рейтинга курса');
                 }
-                res.redirect(`/course/${courseId}`);
+                const avgRating = ratingRow.avg_rating ? parseFloat(ratingRow.avg_rating) : 0;
+                db.run("UPDATE courses SET rating = ? WHERE id = ?", [avgRating, courseId], function(err) {
+                    if (err) {
+                        return res.send('Ошибка обновления рейтинга курса');
+                    }
+                    res.redirect(`/course/${courseId}`);
+                });
             });
         });
     });
@@ -193,11 +258,45 @@ app.post('/rate-course/:id', authenticateToken, (req, res) => {
 // Изучение курса
 app.post('/complete-course/:id', authenticateToken, (req, res) => {
     const courseId = req.params.id;
-    db.run("INSERT INTO user_courses (user_id, course_id) VALUES (?, ?)", [req.user.id, courseId], function(err) {
+    db.get("SELECT * FROM user_courses WHERE user_id = ? AND course_id = ?", [req.user.id, courseId], (err, userCourse) => {
         if (err) {
-            return res.send('Ошибка завершения курса');
+            return res.send('Ошибка проверки завершения курса');
         }
-        res.redirect(`/course/${courseId}`);
+        if (userCourse) {
+            return res.send('Вы уже прошли этот курс');
+        }
+        db.run("INSERT INTO user_courses (user_id, course_id) VALUES (?, ?)", [req.user.id, courseId], function(err) {
+            if (err) {
+                return res.send('Ошибка завершения курса');
+            }
+            res.redirect(`/course/${courseId}`);
+        });
+    });
+});
+
+// Смена пароля
+app.post('/change-password', authenticateToken, async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    db.get("SELECT * FROM users WHERE id = ?", [req.user.id], (err, user) => {
+        if (err || !user) {
+            return res.send('Ошибка получения данных пользователя');
+        }
+        bcrypt.compare(oldPassword, user.password, (err, result) => {
+            if (err || !result) {
+                return res.send('Старый пароль неверный');
+            }
+            bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
+                if (err) {
+                    return res.send('Ошибка шифрования нового пароля');
+                }
+                db.run("UPDATE users SET password = ? WHERE id = ?", [hashedPassword, req.user.id], function(err) {
+                    if (err) {
+                        return res.send('Ошибка смены пароля');
+                    }
+                    res.redirect('/profile');
+                });
+            });
+        });
     });
 });
 
