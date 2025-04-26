@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title><%= course.title %></title>
+</head>
+<body>
+    <header>
+        <h1><%= course.title %></h1>
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/profile">Профиль</a>
+            <a href="/create-course">Создать курс</a>
+            <a href="/logout">Выход</a>
+        </nav>
+    </header>
+    <main>
+        <section class="course-details">
+            <h2>Автор: <%= course.author_name %></h2>
+            <p><%= course.description %></p>
+            <div class="rating">
+                <%= Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
+            </div>
+            <h3>Содержание курса</h3>
+            <div class="content">
+                <p><%= course.content %></p>
+            </div>
+            <form action="/rate-course/<%= course.id %>" method="post">
+                <label for="rating">Оцените курс:</label>
+                <select name="rating" id="rating" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <button type="submit">Оценить</button>
+            </form>
+            <form action="/complete-course/<%= course.id %>" method="post">
+                <button type="submit">Пройти курс</button>
+            </form>
+        </section>
+    </main>
+    <script src="/scripts.js"></script>
+</body>
+</html>
