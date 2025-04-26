@@ -9,7 +9,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
 
 // Подключение к базе данных
 let db = new sqlite3.Database(':memory:');
