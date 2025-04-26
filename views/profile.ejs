@@ -21,7 +21,17 @@
             <img src="<%= user.avatar || '/default-avatar.png' %>" alt="Avatar" class="avatar">
             <h2><%= user.username %></h2>
             <p>Email: <%= user.email %></p>
+            <form action="/change-avatar" method="post" enctype="multipart/form-data">
+                <label for="avatar">Изменить аватар:</label>
+                <input type="file" id="avatar" name="avatar" accept="image/*" required>
+                <button type="submit">Загрузить</button>
+            </form>
+            <form action="/delete-avatar" method="post">
+                <button type="submit">Удалить аватар</button>
+            </form>
             <form action="/change-password" method="post">
+                <label for="oldPassword">Старый пароль:</label>
+                <input type="password" id="oldPassword" name="oldPassword" required>
                 <label for="newPassword">Новый пароль:</label>
                 <input type="password" id="newPassword" name="newPassword" required>
                 <button type="submit">Сменить пароль</button>
