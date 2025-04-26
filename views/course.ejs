@@ -28,6 +28,13 @@
             <div class="content">
                 <p><%= course.content %></p>
             </div>
+            <% if (!userCourse) { %>
+                <form action="/complete-course/<%= course.id %>" method="post">
+                    <button type="submit">Пройти курс</button>
+                </form>
+            <% } else { %>
+                <p>Вы уже прошли этот курс</p>
+            <% } %>
             <% if (!userRating) { %>
                 <form action="/rate-course/<%= course.id %>" method="post">
                     <label for="rating">Оцените курс:</label>
@@ -42,13 +49,6 @@
                 </form>
             <% } else { %>
                 <p>Вы уже оценили этот курс</p>
-            <% } %>
-            <% if (!userCourse) { %>
-                <form action="/complete-course/<%= course.id %>" method="post">
-                    <button type="submit">Пройти курс</button>
-                </form>
-            <% } else { %>
-                <p>Вы уже прошли этот курс</p>
             <% } %>
         </section>
     </main>
