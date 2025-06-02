@@ -16,7 +16,7 @@ app.use(express.static('public'));
 // Настройка multer для загрузки файлов
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, 'public/uploads/');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname);
@@ -25,8 +25,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Создание директории для загрузки файлов
-if (!fs.existsSync('uploads')) {
-    fs.mkdirSync('uploads');
+if (!fs.existsSync('public/uploads/')) {
+    fs.mkdirSync('public/uploads/');
 }
 
 // Подключение к базе данных в файле
@@ -63,7 +63,7 @@ function authenticateToken(req, res, next) {
 app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    db.run("INSERT INTO users (username, email, password, avatar) VALUES (?, ?, ?, ?)", [username, email, hashedPassword, '/default-avatar.png'], function(err) {
+    db.run("INSERT INTO users (username, email, password, avatar) VALUES (?, ?, ?, ?)", [username, email, hashedPassword, 'uploads/default-avatar.png'], function(err) {
         if (err) {
             return res.send('Ошибка регистрации');
         }
@@ -137,7 +137,7 @@ app.post('/change-avatar', upload.single('avatar'), authenticateToken, (req, res
 
 // Удаление аватара
 app.post('/delete-avatar', authenticateToken, (req, res) => {
-    db.run("UPDATE users SET avatar = ? WHERE id = ?", ['/default-avatar.png', req.user.id], function(err) {
+    db.run("UPDATE users SET avatar = ? WHERE id = ?", ['uploads/default-avatar.png', req.user.id], function(err) {
         if (err) {
             return res.send('Ошибка удаления аватара');
         }
