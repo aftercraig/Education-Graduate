@@ -71,7 +71,8 @@ form button {
 }
 
 form button:hover {
-    background-color: #45a049;
+    background-color: rgb(194, 165, 0);
+    transition: 0.2s linear;
 }
 
 .courses {
@@ -237,13 +238,15 @@ input#newPassword {
     text-decoration: underline;
 }
 
-.register-form {
+.register-form,
+.login-form {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.reg-user {
+.reg-user,
+.log-user {
     color: rgb(255, 217, 0);
     background-color: #3f3f3f;
     display: flex;
@@ -254,13 +257,15 @@ input#newPassword {
 
 input#username,
 input#email,
-input#password {
+input#password,
+input#identifier {
     color: rgb(255, 217, 0);
     background-color: #555555;
     padding: 10px 60px;
 }
 
-.register-acc-exist {
+.register-acc-exist,
+.login-not-exist {
     display: flex;
     justify-content: center;
     color: rgb(255, 217, 0);
