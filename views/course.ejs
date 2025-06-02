@@ -33,7 +33,7 @@
                     <button type="submit">Пройти курс</button>
                 </form>
             <% } else { %>
-                <p>Вы уже прошли этот курс</p>
+                <p>Поздравляем с прохождением курса!</p>
             <% } %>
             <% if (!userRating) { %>
                 <form action="/rate-course/<%= course.id %>" method="post">
@@ -48,7 +48,7 @@
                     <button type="submit">Оценить</button>
                 </form>
             <% } else { %>
-                <p>Вы уже оценили этот курс</p>
+                <p>Спасибо за оценку!</p>
             <% } %>
         </section>
     </main>
