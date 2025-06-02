@@ -11,16 +11,20 @@
         <h1>Вход</h1>
     </header>
     <main>
-        <form action="/login" method="post">
-            <label for="identifier">Логин или почта:</label>
-            <input type="text" id="identifier" name="identifier" required>
-            
-            <label for="password">Пароль:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Войти</button>
-        </form>
-        <p>Еще нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+        <div class="login-form">
+            <form class="log-user" action="/login" method="post">
+                <label for="identifier">Логин или почта:</label>
+                <input type="text" id="identifier" name="identifier" required>
+                
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+        <div class="login-not-exist">
+            <p>Впервые здесь? <a class="confirm" href="/register">Зарегистрироваться</a></p>
+        </div>
     </main>
     <script src="/scripts.js"></script>
 </body>
