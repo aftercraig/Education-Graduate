@@ -62,8 +62,8 @@ form select {
 }
 
 form button {
-    background-color: #4CAF50;
-    color: white;
+    background-color: rgb(255, 217, 0);
+    color: rgb(0, 0, 0);
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -122,13 +122,23 @@ form button:hover {
 .pfp-manipulate {
     display: flex;
     flex-direction: row;
+    align-items: center;
+}
+
+.change-pfp {
+    color: rgb(255, 217, 0);
+    background-color: #3f3f3f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 70px;
 }
 
 .pfp-del-button {
     margin: 0;
-    padding: 30px 20px;
+    padding: 5px 20px 0 20px;
     border-radius: 10px;
-    font-size: 90px;
+    font-size: 80px;
     background-color: rgb(255, 217, 0);
 }
 
@@ -142,13 +152,28 @@ form button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 .psw-form {
     color: rgb(255, 217, 0);
     background-color: #3f3f3f;
-    padding: 20px 96px;
+    padding: 20px 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input#oldPassword {
+    color: rgb(255, 217, 0);
+    background-color: #555555;
+    padding: 10px 60px;
+}
+
+input#newPassword {
+    color: rgb(255, 217, 0);
+    background-color: #555555;
+    padding: 10px 60px;
 }
 
 .profile-h2 {
@@ -167,15 +192,33 @@ form button:hover {
     padding-bottom: 10px;
 }
 
+.profile-courses-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .created-courses,
 .completed-courses {
-    margin-bottom: 20px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.course-profile-a {
+    color: rgb(255, 217, 0);
 }
 
 .created-courses ul,
 .completed-courses ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .created-courses li,
@@ -186,7 +229,7 @@ form button:hover {
 .created-courses a,
 .completed-courses a {
     text-decoration: none;
-    color: #4CAF50;
+    color: rgb(255, 217, 0);
 }
 
 .created-courses a:hover,
