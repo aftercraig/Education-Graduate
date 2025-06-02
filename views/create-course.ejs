@@ -17,18 +17,20 @@
         </nav>
     </header>
     <main>
-        <form action="/create-course" method="post">
-            <label for="title">Название курса:</label>
-            <input type="text" id="title" name="title" required>
-            
-            <label for="description">Краткое описание:</label>
-            <textarea id="description" name="description" required></textarea>
-            
-            <label for="content">Материал курса:</label>
-            <textarea id="content" name="content" required></textarea>
-            
-            <button type="submit">Создать курс</button>
-        </form>
+        <div class="course-creation">
+            <form class="course-creation-form" action="/create-course" method="post">
+                <label for="title">Название курса:</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="description">Краткое описание:</label>
+                <textarea id="description" name="description" required></textarea>
+                
+                <label for="content">Материал курса:</label>
+                <textarea id="content" name="content" required></textarea>
+                
+                <button type="submit">Создать курс</button>
+            </form>
+        </div>
     </main>
     <script src="/scripts.js"></script>
 </body>
