@@ -22,8 +22,8 @@
             <h2  class="profile-h2"><%= user.username %></h2>
             <p class="profile-p">Email: <%= user.email %></p>
             <div class="pfp-manipulate">
-                <form action="/change-avatar" method="post" enctype="multipart/form-data">
-                    <label for="avatar">Изменить аватар:</label>
+                <form class="change-pfp" action="/change-avatar" method="post" enctype="multipart/form-data">
+                    <label for="avatar">Изменить аватар</label>
                     <input type="file" id="avatar" name="avatar" accept="image/*" required>
                     <button type="submit">Загрузить</button>
                 </form>
@@ -41,22 +41,24 @@
                 </form>
             </div>
         </section>
-        <section class="created-courses">
-            <h2 class="profile-h2">Созданные курсы</h2>
-            <ul>
-                <% createdCourses.forEach(course => { %>
-                    <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
-                <% }) %>
-            </ul>
-        </section>
-        <section class="completed-courses">
-            <h2 class="profile-h2">Пройденные курсы</h2>
-            <ul>
-                <% completedCourses.forEach(course => { %>
-                    <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
-                <% }) %>
-            </ul>
-        </section>
+        <div class="profile-courses-block">
+            <section class="created-courses">
+                <h2 class="profile-h2">Созданные курсы:</h2>
+                <ul>
+                    <% createdCourses.forEach(course => { %>
+                        <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
+                    <% }) %>
+                </ul>
+            </section>
+            <section class="completed-courses">
+                <h2 class="profile-h2">Пройденные курсы:</h2>
+                <ul>
+                    <% completedCourses.forEach(course => { %>
+                        <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
+                    <% }) %>
+                </ul>
+            </section>
+        </div>
     </main>
     <script src="/scripts.js"></script>
 </body>
