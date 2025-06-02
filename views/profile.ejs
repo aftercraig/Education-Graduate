@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <title>Профиль</title>
 </head>
 <body>
@@ -11,34 +11,38 @@
         <h1>Профиль</h1>
         <nav>
             <a href="/">Главная</a>
-            <a href="/profile">Профиль</a>
             <a href="/create-course">Создать курс</a>
+            <a href="/profile">Профиль</a>
             <a href="/logout">Выход</a>
         </nav>
     </header>
     <main>
         <section class="user-info">
-            <img src="<%= user.avatar || '/default-avatar.png' %>" alt="Avatar" class="avatar">
-            <h2><%= user.username %></h2>
-            <p>Email: <%= user.email %></p>
-            <form action="/change-avatar" method="post" enctype="multipart/form-data">
-                <label for="avatar">Изменить аватар:</label>
-                <input type="file" id="avatar" name="avatar" accept="image/*" required>
-                <button type="submit">Загрузить</button>
-            </form>
-            <form action="/delete-avatar" method="post" style="display: inline-block; margin-left: 10px;">
-                <button type="submit">Удалить аватар</button>
-            </form>
-            <form action="/change-password" method="post">
-                <label for="oldPassword">Старый пароль:</label>
-                <input type="password" id="oldPassword" name="oldPassword" required>
-                <label for="newPassword">Новый пароль:</label>
-                <input type="password" id="newPassword" name="newPassword" required>
-                <button type="submit">Сменить пароль</button>
-            </form>
+            <img src="<%= user.avatar || 'uploads/default-avatar.png' %>" alt="Avatar" class="avatar">
+            <h2  class="profile-h2"><%= user.username %></h2>
+            <p class="profile-p">Email: <%= user.email %></p>
+            <div class="pfp-manipulate">
+                <form action="/change-avatar" method="post" enctype="multipart/form-data">
+                    <label for="avatar">Изменить аватар:</label>
+                    <input type="file" id="avatar" name="avatar" accept="image/*" required>
+                    <button type="submit">Загрузить</button>
+                </form>
+                <form action="/delete-avatar" method="post" style="padding: 0; border-radius: 10px; margin-left: 10px;">
+                    <button class="pfp-del-button" type="submit">X</button>
+                </form>
+            </div>
+            <div class="password-section">
+                <form class="psw-form" action="/change-password" method="post">
+                    <label for="oldPassword">Старый пароль:</label>
+                    <input type="password" id="oldPassword" name="oldPassword" required>
+                    <label for="newPassword">Новый пароль:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                    <button type="submit">Сменить пароль</button>
+                </form>
+            </div>
         </section>
         <section class="created-courses">
-            <h2>Созданные курсы</h2>
+            <h2 class="profile-h2">Созданные курсы</h2>
             <ul>
                 <% createdCourses.forEach(course => { %>
                     <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
@@ -46,7 +50,7 @@
             </ul>
         </section>
         <section class="completed-courses">
-            <h2>Пройденные курсы</h2>
+            <h2 class="profile-h2">Пройденные курсы</h2>
             <ul>
                 <% completedCourses.forEach(course => { %>
                     <li><a href="/course/<%= course.id %>"><%= course.title %></a></li>
