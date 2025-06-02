@@ -2,14 +2,15 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    background-color: #555555;
 }
 
 header {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #3f3f3f;
+    color: rgb(255, 217, 0);
     padding: 1em 0;
     text-align: center;
+    font-family: 'Sunday';
 }
 
 nav {
@@ -17,9 +18,18 @@ nav {
 }
 
 nav a {
-    color: white;
+    color: rgb(255, 255, 255);
     margin: 0 10px;
     text-decoration: none;
+}
+
+nav a:hover {
+	color: rgb(255, 217, 0);
+	transition: 0.2s linear;
+}
+
+nav a:active {
+    color: rgb(255, 232, 99);
 }
 
 main {
@@ -95,15 +105,66 @@ form button:hover {
 }
 
 .user-info {
-    text-align: center;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .user-info .avatar {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
+    border: 3px rgb(255, 217, 0) solid;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.pfp-manipulate {
+    display: flex;
+    flex-direction: row;
+}
+
+.pfp-del-button {
+    margin: 0;
+    padding: 30px 20px;
+    border-radius: 10px;
+    font-size: 90px;
+    background-color: rgb(255, 217, 0);
+}
+
+.pfp-del-button:hover {
+	color: rgb(0, 0, 0);
+    background-color: red;
+	transition: 0.2s linear;
+}
+
+.password-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.psw-form {
+    color: rgb(255, 217, 0);
+    background-color: #3f3f3f;
+    padding: 20px 96px;
+}
+
+.profile-h2 {
+    font-family: 'Pobeda Bold';
+    color: rgb(255, 217, 0);
+    font-size: 42px;
+    margin: 0;
+    padding: 10px 0 4px 0;
+}
+
+.profile-p {
+    font-family: 'Pobeda Bold';
+    color: rgb(255, 217, 0);
+    font-size: 28px;
+    margin: 0;
+    padding-bottom: 10px;
 }
 
 .created-courses,
@@ -131,4 +192,24 @@ form button:hover {
 .created-courses a:hover,
 .completed-courses a:hover {
     text-decoration: underline;
+}
+
+@font-face {
+	font-family: 'Sunday';
+	src: url('../fonts/sunday.eot'); /* IE 9 Compatibility Mode */
+	src: url('../fonts/sunday.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
+		url('../fonts/sunday.woff2') format('woff2'), /* Super Modern Browsers */
+		url('../fonts/sunday.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
+		url('../fonts/sunday.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('../fonts/sunday.svg#sunday') format('svg'); /* Chrome < 4, Legacy iOS */
+}
+
+@font-face {
+	font-family: 'Pobeda Bold';
+	src: url('../fonts/pobeda_bold.eot'); /* IE 9 Compatibility Mode */
+	src: url('../fonts/pobeda_bold.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
+		url('../fonts/pobeda_bold.woff2') format('woff2'), /* Super Modern Browsers */
+		url('../fonts/pobeda_bold.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
+		url('../fonts/pobeda_bold.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('../fonts/pobeda_bold.svg#pobeda_bold') format('svg'); /* Chrome < 4, Legacy iOS */
 }
