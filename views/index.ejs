@@ -17,27 +17,29 @@
         </nav>
     </header>
     <main>
-        <form action="/search" method="get">
-            <input type="text" name="query" placeholder="Поиск курсов...">
-            <select name="sort">
-                <option value="">По умолчанию</option>
-                <option value="rating">По рейтингу</option>
-            </select>
-            <button type="submit">Искать</button>
-        </form>
-        <section class="courses">
-            <% courses.forEach(course => { %>
-                <div class="course">
-                    <h2><%= course.title %></h2>
-                    <p><%= course.description %></p>
-                    <div class="rating">
-                        <span>Рейтинг:</span>
-                        <%- Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
+        <div class="main-page-course">
+            <form class="get-courses" action="/search" method="get">
+                <input type="text" name="query" placeholder="Поиск курсов...">
+                <select name="sort">
+                    <option value="">По умолчанию</option>
+                    <option value="rating">По рейтингу</option>
+                </select>
+                <button type="submit">Искать</button>
+            </form>
+            <section class="courses">
+                <% courses.forEach(course => { %>
+                    <div class="course">
+                        <h2 class="course-name"><%= course.title %></h2>
+                        <p class="course-desc"><%= course.description %></p>
+                        <div class="rating">
+                            <span>Рейтинг:</span>
+                            <%- Array.from({ length: Math.round(course.rating) }, (_, i) => '<i class="star">&#9733;</i>').join('') %>
+                        </div>
+                        <a class="course-link" href="/course/<%= course.id %>">Подробнее</a>
                     </div>
-                    <a href="/course/<%= course.id %>">Подробнее</a>
-                </div>
-            <% }) %>
-        </section>
+                <% }) %>
+            </section>
+        </div>
     </main>
     <script src="/scripts.js"></script>
 </body>
