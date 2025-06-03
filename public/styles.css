@@ -99,6 +99,7 @@ form button:hover {
 
 .rating span {
     margin-right: 5px;
+    color: rgb(255, 230, 90);
 }
 
 .star {
@@ -248,6 +249,7 @@ input#newPassword {
 
 .reg-user,
 .log-user,
+.get-courses,
 .course-creation-form {
     color: rgb(255, 217, 0);
     background-color: #3f3f3f;
@@ -257,6 +259,8 @@ input#newPassword {
     padding: 20px 100px;
 }
 
+input,
+select,
 input#username,
 input#email,
 input#password,
@@ -286,6 +290,51 @@ textarea#content {
 
 .confirm {
     color: rgb(255, 255, 255);
+}
+
+section.courses {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px 0;
+}
+
+div.course {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3f3f3f;
+}
+
+.main-page-course {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+}
+
+.course-name {
+    color: rgb(255, 217, 0);
+    font-family: 'Pobeda Bold';
+    margin: 0;
+    font-size: 35px;
+}
+
+div.rating {
+    margin: 0 0 10px 0;
+}
+
+.course-link {
+    color: white;
+}
+
+.course-desc {
+    color: rgb(255, 217, 0);
+}
+
+::placeholder {
+    color: white;
 }
 
 @font-face {
