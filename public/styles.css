@@ -343,6 +343,44 @@ div.rating {
     flex-direction: column;
 }
 
+.apply-rating {
+    background-color: #3f3f3f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 20px 80px;
+}
+
+.finish-course {
+    padding: 0;
+    margin: 10px;
+}
+
+.course-big {
+    font-family: 'Pobeda Bold';
+    color: rgb(255, 217, 0);
+    font-size: 30px;
+    margin: 0;
+}
+
+.course-mini-text {
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+}
+
+.course-mark {
+    font-family: 'Pobeda Bold';
+    color: rgb(255, 217, 0);
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.btn-send {
+    padding: 10px 35px;
+}
+
 @font-face {
 	font-family: 'Sunday';
 	src: url('../fonts/sunday.eot'); /* IE 9 Compatibility Mode */
