@@ -336,6 +336,13 @@ div.rating {
     color: white;
 }
 
+.course-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 @font-face {
 	font-family: 'Sunday';
 	src: url('../fonts/sunday.eot'); /* IE 9 Compatibility Mode */
@@ -354,4 +361,100 @@ div.rating {
 		url('../fonts/pobeda_bold.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
 		url('../fonts/pobeda_bold.ttf') format('truetype'), /* Safari, Android, iOS */
 		url('../fonts/pobeda_bold.svg#pobeda_bold') format('svg'); /* Chrome < 4, Legacy iOS */
+}
+
+@media screen and (max-width: 344px) {
+    label {
+        font-size: 14px;
+    } 
+    
+    .course-name {
+        font-size: 35px;
+        text-align: center;
+    }
+
+    .course {
+        padding: 28px;
+    }
+
+    form.get-courses {
+        padding: 20px 50px;
+    }
+}
+
+@media screen and (max-width: 434px) {
+
+    form.get-courses {
+        padding: 20px 60px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    form.change-pfp {
+        padding: 20px 60px;
+    }
+}
+
+@media screen and (max-width: 810px) {
+    input#title {
+        padding: 10px 10px;
+    }
+
+    form.course-creation-form {
+        padding: 20px 60px;
+        margin: 0;
+    }
+
+    textarea#description {
+        padding: 10px 10px;
+    }
+
+    textarea#content {
+        padding: 10px 10px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    form.course-creation-form {
+        padding: 20px 20px;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 550px) {
+        input#title {
+        padding: 10px 0px;
+    }
+
+    textarea#description {
+        padding: 10px 0px;
+    }
+
+    textarea#content {
+        padding: 10px 0px;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    input#title {
+        padding: 10px 0px;
+        min-width: 200px;
+        max-width: 500px;
+    }
+
+    textarea#description {
+        padding: 10px 0px;
+        min-width: 200px;
+        max-width: 500px;
+    }
+
+    textarea#content {
+        padding: 10px 0px;
+        min-width: 200px;
+        max-width: 500px;
+    }
+
+    form.course-creation-form {
+        padding: 20px 20px;
+    }
 }
