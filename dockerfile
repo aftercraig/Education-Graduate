@@ -1,18 +1,16 @@
-# Берём официальный образ Node.js 20 (LTS)
 FROM node:20-bookworm
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем package.json и устанавливаем зависимости
-COPY package*.json ./
-RUN npm install --no-optional
+# Установка build-зависимостей
+RUN apt-get update && \
+    apt-get install -y python3 make g++ build-essential && \
+    rm -rf /var/lib/apt/lists/*
 
-# Копируем остальные файлы
+# Установка зависимостей
+COPY package*.json ./
+RUN npm ci --no-optional
+
 COPY . .
 
-# Открываем порт
-EXPOSE 3000
-
-# Запускаем приложение
 CMD ["npm", "start"]
